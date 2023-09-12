@@ -1,4 +1,5 @@
-module.exports.add=(a,b)=>{
+//Learnign how to make the functions inside a file exportable
+module.exports.add=(a,b)=>{ //Use module.exports to export the function
     return a+b;
 }
 exports.multiply=(a,b)=>{
