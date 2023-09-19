@@ -1,7 +1,14 @@
 //Learnign how to make the functions inside a file exportable
-module.exports.add=(a,b)=>{ //Use module.exports to export the function
+function add(a,b){ //Use module.exports to export the function
     return a+b;
 }
-exports.multiply=(a,b)=>{
-    return a+b;
+function multiply(a,b){
+    return a*b;
 }
+function subtract(a,b){
+    return a-b;
+}
+function divide(a,b){
+    return a/b;
+}
+module.exports={add, multiply,subtract,divide}
