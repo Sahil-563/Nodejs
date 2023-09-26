@@ -2,6 +2,6 @@
 module.exports.add=(a,b)=>{ //Use module.exports to export the function
     return a+b;
 }
-exports.multiply=(a,b)=>{
-    return a+b;
+module.exports.multiply=(a,b)=>{
+    return a*b;
 }
