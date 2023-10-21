@@ -2,3 +2,32 @@
     background: #000;
     color: aliceblue;
 }
+.heading{
+    text-align: center;
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+li{
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.container{
+    height: 50px;
+    width: 400px;
+}
+.button{
+    background-color: red;
+    margin-top: 14px;
+}
+.submit{
+    background-color: green;
+}
+button:hover{
+    cursor: pointer;
+}

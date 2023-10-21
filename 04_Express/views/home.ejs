@@ -9,38 +9,43 @@
 </head>
 
 <body>
-  <h1>Contact List</h1>
-  <div>
+  
+  <div class="wrapper">
+    <h1 class="heading">Contact List</h1>
     <ul>
       <% for(let i of contact_List){ %>
-        <li>
-          <p>
-            <%= i.name %>
-          </p>
-          <p>
-            <%= i.phone %>
-          </p>
-          <div>
-            <!-- <a href="/delete-contact/<%= i.phone %>">
-              <button>delete</button>
-            </a> -->
-            <a href="delete-contact/?phone=<%= i.phone %>">
-              <button>delete</button>
-            </a>
-          </div>
-        </li>
+        <div class="container">
+          <li>
+            <p>
+              <%= i.name %>
+            </p>
+            <p>
+              <%= i.phone %>
+            </p>
+            <div>
+              <!-- <a href="/delete-contact/<%= i.phone %>">
+                <button>delete</button>
+              </a> -->
+              <a href="delete-contact/?id=<%= i.id %>">
+                <button class="button">delete</button>
+              </a>
+            </div>
+          </li>
+        </div>
+       
   
         <% } %>
     </ul>
+    <div>
+      <form action="/create-contact" method="post">
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <input type="number" name="phone" placeholder="Enter your number" required>
+        <button class='submit' type="submit">Add Contact</button>
+      </form>
+    </div>
 
   </div>
-  <div>
-    <form action="/create-contact" method="post">
-      <input type="text" name="name" placeholder="Enter your name" required>
-      <input type="number" name="phone" placeholder="Enter your number" required>
-      <button type="submit">Add Contact</button>
-    </form>
-  </div>
+  
  
 <!-- Adding js to our page -->
 <script type="text/javascript" src="/js/home.js"></script>
