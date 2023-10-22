@@ -31,3 +31,25 @@ li{
 button:hover{
     cursor: pointer;
 }
+
+.custom-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #470ad6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* CSS for button hover effect */
+.custom-button:hover {
+    background-color: #1e87d7;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

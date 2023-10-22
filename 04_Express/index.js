@@ -1,6 +1,7 @@
 // My first Express Server
 const { log } = require('console');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const port = 8000
 const db = require('./config/mongoose')//Connecting to database
 const Contact = require('./models/contact') //Connectning to the schema of our database
@@ -11,7 +12,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded()); //It is a parser parser is also a middleware  It takes data which is submitted by a form convert into an object
-
+app.use(cookieParser()); //used to parse the cookies
 //Creating our own middleware
 // app.use(function(req, res, next) {
 //     // console.log('Middleware 1 is called');
@@ -48,8 +49,23 @@ var contactList = [
 //     })
 // })
 
+
+
+//We have created a middleware which will check that the user is logged in(means cookie is present) or user is logged out(means cookie is not present)
+const isAuthenticated = (req, res, next) => {
+    console.log(req.cookies);//Since we are redirectind to '/' so we can access the cookie from here
+    console.log(req.cookies.token);
+    const token = req.cookies.token
+    if (token) {
+        next(); // When this middleware is passed this statement then next resposnse will be executed
+    }
+    else {
+        res.render('login') //if the token is not present then login page will be rendered
+    }
+}
 //Fetching or finding data from database
-app.get('/', async function (req, res) {
+//Firstly before rendering '/' home page '/' this route have to be passed from a middleware which is isAuthenticated 
+app.get('/', isAuthenticated, async function (req, res) {
     try {
         const contact = await Contact.find();
         // console.log(contact);
@@ -61,7 +77,8 @@ app.get('/', async function (req, res) {
     catch (err) {
         console.error('Error fetching data from MongoDB', err);
         res.status(500).json({ error: 'Internal Server Error' });
-      }
+    }
+
 })
 app.get('/practice', function (req, res) {
     return res.render('practice', { title: 'Practice' })
@@ -83,7 +100,7 @@ app.post('/create-contact', async function (req, res) {
             name: req.body.name,
             phone: req.body.phone
         });
-        console.log("Contact is created with phone number", contact.phone,' and name', contact.name);
+        console.log("Contact is created with phone number", contact.phone, ' and name', contact.name);
         return res.redirect('back');
     } catch (err) {
         console.log('Error in creating contact', err);
@@ -99,17 +116,35 @@ app.post('/create-contact', async function (req, res) {
 
 //Another way of having the data from url using query params
 app.get('/delete-contact/', async function (req, res) {
-    try{
+    try {
         let id = req.query.id; //Get the 24 hex character string id from url 
         // console.log(typeof id);
         const deletedUser = await Contact.findByIdAndRemove(id);//To delete anything from database we use findByIdAndRemove() method and also to delete anything from db is async request so we keep it into a try and catch block
-        console.log('Contact is deleted with name: ' + deletedUser.name+' and mobile number: ' + deletedUser.phone);
+        console.log('Contact is deleted with name: ' + deletedUser.name + ' and mobile number: ' + deletedUser.phone);
         return res.redirect('back');
     }
     catch (err) {
         console.error(err); //If any error occured then will print error
     }
 })
+
+app.get('/login', function (req, res) {
+    //Creating a cookie for login session
+    res.cookie('token', 'iamin', {
+        httpOnly: true, expires: new Date(Date.now() + 60 * 1000)
+
+    })
+    return res.redirect('/')
+})
+app.get('/logout', function (req, res) {
+    //Creating a cookie for login session
+    res.cookie('token', null, {
+        httpOnly: true, expires: new Date(Date.now())
+
+    })
+    return res.redirect('/')
+})
+
 
 app.listen(port, (err) => {
     if (err) {
