@@ -1,7 +1,7 @@
 //Including the library
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 //Connecting to a port using mongoose
-mongoose.connect('mongodb://127.0.0.1:27017/NodeApi');
+mongoose.connect('mongodb://127.0.0.1:27017');
 //Establishing a successful connection with mongoose
 const db = mongoose.connection;
 //Printing error if there is any

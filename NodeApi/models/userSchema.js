@@ -1,6 +1,6 @@
 //Creating a schema for users email id and name
 // This is the schema
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     name:{
         type: 'String',
@@ -15,5 +15,4 @@ const userSchema = new mongoose.Schema({
         required: true,
     }
 })
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+export const User = mongoose.model('User', userSchema);
